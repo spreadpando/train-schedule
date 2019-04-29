@@ -27,7 +27,7 @@ $('#submit').on('click', function () {
 })
 
 dB.ref("/trainsArray").on('value', function (snapshot) {
-	renderTrains(snapshot);
+	setInterval(renderTrains(snapshot), 60000);
 });
 
 function renderTrains(snapshot) {
@@ -45,7 +45,7 @@ function renderTrains(snapshot) {
 		let remainder = difference % frequency;
 		let nextTrain = frequency - remainder;
 		let nextDiv = $('<div>').attr('class', 'row').html(" will be arriving in <h1>" + nextTrain + " minute(s) </h1>");
-		let arriving = moment().add(nextTrain).format("HH:mm");
+		let arriving = moment().add(nextTrain, 'minutes').format("HH:mm");
 		let arrivalDiv = $('<div>').attr('class', 'row').html(" at <h1>" + arriving + "</h1>");
 		detail.append(nameDiv, destDiv, nextDiv, arrivalDiv);
 		$('#schedule').append(detail);
